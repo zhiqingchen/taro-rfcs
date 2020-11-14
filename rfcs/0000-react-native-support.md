@@ -337,16 +337,16 @@ useDidShow，useDidHide，usePullDownRefresh等，参考 H5 React 实现。
 
 组件包 taro-rn fork 自 2.x 版本，增加对如下API的支持。
 
-| API                                  | 实现方案                                        |
-| ------------------------------------ | ----------------------------------------------- |
+| API                                  | 实现方案                                        | 一期情况 |
+| ------------------------------------ | ----------------------------------------------- | - |
 | tabBar相关API                        | 基于 React Navigation 进行封装。                |
 | VideoContext                         | 基于 expo-av 进行封装。                         |
 | CameraContext                        | 基于 expo-camera 进行封装。                     |
 | AudioContext                         | 基于 expo-av 进行封装。                         |
-| * Animation                          | 基于 Animated 进行封装。                        |
+| * Animation                          | 基于 Animated 进行封装。                        | 未实现 |
 | 扫码                                 | 基于 expo-barcode-scanner 进行封装。            |
 | File相关API                          | 基于 expo-file-system 进行封装                  |
-| * Canvas相关API                      | 基于 react-native-canvas 封装。                 |
+| * Canvas相关API                      | 基于 react-native-canvas 封装。                 | 未实现 |
 | 网络请求（downloadFile，uploadFile） | 基于 fetch 及 expo-file-system 进行封装。       |
 | Resize 及 Keyboard 事件监听          | Resize 基于 Dimensions，Keyboard基于            |
 | WebSocket                            | 基于 React Native WebSocket Support  进行封装。 |
@@ -359,17 +359,17 @@ useDidShow，useDidHide，usePullDownRefresh等，参考 H5 React 实现。
 
 组件包 taro-component-rn fork 自 2.x 版本，增加对如下组件的支持。
 
-| 组件                           | 实现方案                                                 |
-| ------------------------------ | -------------------------------------------------------- |
+| 组件                           | 实现方案                                                 | 一期情况 |
+| ------------------------------ | -------------------------------------------------------- | - |
 | VirtualList                    | 封装 [FlatList](https://reactnative.dev/docs/flatlist)。 |
 | MovableView 及 MovableArea     | 封装 Animated 及 PanResponder。                          |
-| Label                          | 封装 View 当点击时，会触发对应的控件更新。               |
+| Label                          | 封装 View 当点击时，会触发对应的控件更新。               | 未实现 |
 | PickerView 及 PickerViewColumn | 基于 @ant-design/react-native 封装。                     |
 | Navigator                      | 封装对路由的操作。                                       |
 | Audio                          | 基于 expo-av 进行封装。                                  |
 | Video                          | 基于 expo-av 进行封装。                                  |
 | Camera                         | 基于 expo-camera 进行封装。                              |
-| *Canvas                        | 基于 react-native-canvas 封装。                          |
+| *Canvas                        | 基于 react-native-canvas 封装。                          | 未实现 |
 
 注：带*为评估优先级较低。
 
@@ -388,9 +388,60 @@ AppRegistry.registerComponent(appName, () => App);
 
 一期兼容 >= 0.60 版本，初始化会默认选择最新的稳定版本，用户根据需要可自行选择可兼容的版本进行安装。同时壳工程或自身APP需要使用相应的版本。
 
-#### 不强制依赖所有的 Native Modules
+#### 不强制依赖 Native Modules
 
-当 APP 中一些 Native Modules 不存在时，部分 API 不可用，此时弹出警告，而不是阻塞运行。
+除 react-navigation 外，相关原生依赖都是可选安装的。但需要业务层使用 member import。需要用到相关 API 或组件时，可再自行安装对应原生依赖。
+
+使用方法
+```ts
+// API 引入
+import { compressImage } from '@tarojs/taro';
+
+// 组件引入
+import { Camera } from '@tarojs/components';
+```
+
+#### 导航库依赖列表
+> 导航库的依赖默认都是需要安装的
+
+| 依赖包 |
+| - |
+| @react-native-community/masked-view |
+| react-native-gesture-handler |
+| react-native-reanimated |
+| react-native-safe-area-context |
+| react-native-screens |
+| react-native-unimodules |
+
+#### 组件与API原生依赖列表
+
+
+**需要先安装 [react-native-unimodules](https://docs.expo.io/bare/installing-unimodules/)。**
+**该包会包含 expo-asset, expo-constants, expo-file-system, expo-image-loader, expo-permissions**
+
+
+| 组件 | 依赖包 |
+| - | - |
+| Camera | expo-camera, expo-barcode-scanner |
+| Slider | @react-native-community/slider |
+| Picker | @react-native-community/picker |
+| Video | expo-av |
+| WebView | react-native-webview |
+
+| API | 依赖包 |
+| - | - |
+| clearStorage, getStorage, getStorageInfo, removeStorage, setStorage | @react-native-async-storage/async-storage |
+| saveImageToPhotosAlbum, saveVideoToPhotosAlbum| @react-native-community/cameraroll, expo-image-picker |
+| getClipboardData, setClipboardData | @react-native-community/clipboard |
+| getNetworkType, onNetworkStatusChange, offNetworkStatusChange | @react-native-community/netinfo |
+| createInnerAudioContext, getRecorderManager | expo-av |
+| scanCode | expo-barcode-scanner, expo-camera |
+| setScreenBrightness, getScreenBrightness, setKeepScreenOn | expo-brightness, expo-keep-awake |
+| downloadFile, uploadFile | expo-file-system |
+| getLocation | expo-location |
+| onDeviceMotionChange, startDeviceMotionListening, stopDeviceMotionListening, onAccelerometerChange, offAccelerometerChange, startAccelerometer, stopAccelerometer | expo-sensors |
+| compressImage | react-native-image-resizer |
+| chooseImage | react-native-image-crop-picker |
 
 ### 其他
 
@@ -404,7 +455,7 @@ AppRegistry.registerComponent(appName, () => App);
 
 #### 壳工程
 
-保留在原工程仓库 [taro-native-shell](https://github.com/NervJS/taro-native-shell) 中，增加新的分支 0.63.0，0.62.0，0.61.0，0.60.0，均对应 Taro 3版本。
+保留在原工程仓库 [taro-native-shell](https://github.com/NervJS/taro-native-shell) 中，增加新的分支 0.63.0，对应 Taro 3版本，可自行切换对应的 React Native 版本。
 
 ## 缺陷
 
