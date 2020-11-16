@@ -65,10 +65,9 @@ API、组件支持度与小程序相比有些取舍，参考详细设计 API 及
 | *taro-rn                                 | 1. 增加对旧版本不支持的接口的支持，详见API改造小节。         |
 | taro-rn-runner                           | 1. 与用户自定义的 metro 配置做合并。<br/>2. 生成babel配置。<br/>3. 引入style transformer、taro-rn-transformer 等包生成metro配置。<br/>4. 启动bundler。<br/>5. 支持通用编译配置，包括 defineConstants、copy、alias、sass、env 等。<br/>6. 支持RN特殊配置，如样式缩放开关。<br/>7. 引入 babel plugin `transform-jsx-to-stylesheet` 以支持 className 写法。<br/>8. 支持优先加载 *.rn.* 文件，Android加载 .android.文件，iOS加载 .ios.文件。<br/>9. 编译平台包替换及 alias 配置。<br/>10. 打包压缩、sourcemap 等能力支持。 |
 | taro-rn-transformer                      | 1. 拦截入口文件 index.js/index.ts，根据配置，生成入口文件代码。<br/>2. 根据 app.config 的 pages 配置，拦截页面文件，根据配置，生成页面文件代码。<br/>3. 功能类似小程序及h5的 [taro-loader](https://github.com/NervJS/taro/tree/next/packages/taro-loader)。 |
-| taro-style-transformer                   | 1. 支持 sass、less、stylus、postcss文件的引入，转化为 styleObject。<br/>2. 支持 sass 的全局引入[配置](https://taro-docs.jd.com/taro/docs/config-detail#sass)<br/>3. 引入 postcss-pxtransform 以支持 React Native 单位转化。 |
-| taro-asset-transformer                   | 1. 支持引入静态资源，转化图片等资源为 base64。               |
+| taro-rn-style-transformer                   | 1. 支持 sass、less、stylus、postcss文件的引入，转化为 styleObject。<br/>2. 支持 sass 的全局引入[配置](https://taro-docs.jd.com/taro/docs/config-detail#sass)<br/>3. 引入 postcss-pxtransform 以支持 React Native 单位转化。 |
 | babel-plugin-transform-jsx-to-stylesheet | 1. jsx 支持 className 属性，将各种语法转化为 styleObject['className']等。 |
-| bable-preset-taro-rn                     | 1. 将所需 babel plugin 进行合并，统一管理。                  |
+| *bable-preset-taro                     | 1. 增加RN相关配置，将所需 babel plugin 进行合并，统一管理。                  |
 | taro-runtime-rn                          | 1. 提供 app 包装方法。<br/>2. 提供 page 包装方法。<br/>3. 支持 pulldownrefresh 等页面事件处理函数支持。<br/>4. 支持页面配置，title、navigatebar等。<br/>5. 提供 Taro3 新增的全局对象 Current 等。 |
 | taro-router-rn                           | 1. 封装所有的路由处理。<br/>2. 支持新增的TabBar相关API。<br/>3. 支持tabbar相关配置。<br/>4. 支持icon配置。 |
 
@@ -411,7 +410,6 @@ import { Camera } from '@tarojs/components';
 | react-native-reanimated |
 | react-native-safe-area-context |
 | react-native-screens |
-| react-native-unimodules |
 
 #### 组件与API原生依赖列表
 
