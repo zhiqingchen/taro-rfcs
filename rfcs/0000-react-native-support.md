@@ -439,7 +439,7 @@ import { Camera } from '@tarojs/components';
 | getLocation | expo-location |
 | onDeviceMotionChange, startDeviceMotionListening, stopDeviceMotionListening, onAccelerometerChange, offAccelerometerChange, startAccelerometer, stopAccelerometer | expo-sensors |
 | compressImage | react-native-image-resizer |
-| chooseImage | react-native-image-crop-picker |
+| chooseImage | react-native-syan-image-picker |
 
 ### 其他
 
