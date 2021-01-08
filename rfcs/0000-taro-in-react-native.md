@@ -22,27 +22,21 @@
 
 0. 自行处理路由.
 1. 对 taro page 使用 runtime 的`createPageConfig`进行包装.
-2. 将原本在config中的配置, 转移到metro中. 配置结构同 taro config.
+2. 需要有 config 目录，编译配置与 taro 保持一致
 
 ## metro.config.js
 
 ```js
-import Supporter from '@tarojs/rn-supporter'
+const { mergeConfig } = require("metro-config");
+const Supporter = require('@tarojs/rn-supporter')
 
-const support = new Supporter({
-    designWidth: 750,
-    defineConstants: {
-        A: '"a"' // JSON.stringify('a')
-    },
-    rn: {
-        postcss: {},
-        sass: {}
-    }
-})
+const supporter = new Supporter()
+const taroMetroConfig = supporter.getMetroConfig()
 
-module.exports = {
-
+const busConfig = {
+  resetCache:true,
 }
+module.exports = mergeConfig(busConfig,taroMetroConfig)
 ```
 
 ## babel.config.js
@@ -57,5 +51,9 @@ module.exports = {
   ]
 }
 ```
+
+## config/index.js
+
+> 与 Taro 项目完全保持一致。
 
 ## 参考
