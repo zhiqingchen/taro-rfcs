@@ -22,7 +22,8 @@
 
 0. 自行处理路由.
 1. 对 taro page 使用 runtime 的`createPageConfig`进行包装.
-2. 需要有 config 目录，编译配置与 taro 保持一致
+2. 需要有 config 目录，编译配置与 taro 保持一致。
+3. Taro 用到的原生依赖，需要自行安装。（且需要集成 react-native-unimodules）
 
 ## metro.config.js
 
